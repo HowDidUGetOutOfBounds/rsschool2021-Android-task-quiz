@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
         val view = binding.root
         setContentView(view)
 
+        initQuizResults()
         openQuestion(0)
     }
 
@@ -27,5 +28,21 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
 
     override fun onSendData() {
         TODO("Not yet implemented")
+    }
+
+    override fun onSubmit() {
+        TODO("Not yet implemented")
+    }
+
+    fun initQuizResults(){
+        quizResults = arrayListOf("1" to -1,
+            "2" to  -1,
+            "3" to  -1,
+            "4" to  -1,
+            "5" to  -1)
+    }
+
+    companion object{
+        var quizResults: ArrayList<Pair<String, Int>>? = null
     }
 }

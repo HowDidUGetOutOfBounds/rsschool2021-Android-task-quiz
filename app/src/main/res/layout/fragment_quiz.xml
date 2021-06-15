@@ -116,6 +116,17 @@
                     tools:text="Option 5" />
 
             </RadioGroup>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/wot"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radio_group" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
