@@ -43,7 +43,7 @@ class QuestionFragment : Fragment() {
 
         when (styleId) {
             0 -> {
-                mConextThemeWrapper = ContextThemeWrapper(activity, R.style.Theme_Quiz_Fifth)
+                mConextThemeWrapper = ContextThemeWrapper(activity, R.style.Theme_Quiz_First)
                 _binding?.previousButton?.isEnabled = false
                 window?.statusBarColor =
                     context?.resources?.getColor(R.color.deep_orange_100_dark)!!
