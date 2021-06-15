@@ -15,6 +15,7 @@ class QuestionFragment : Fragment() {
 
     private var fragmentSendDataListener: OnFragmentSendDataListener? = null
     private var _binding: FragmentQuizBinding? = null
+    private var isLast = false
 
     interface OnFragmentSendDataListener {
         fun onSendData()
@@ -37,6 +38,7 @@ class QuestionFragment : Fragment() {
         when (styleId) {
             0 -> {
                 mConextThemeWrapper = ContextThemeWrapper(activity, R.style.Theme_Quiz_First)
+                _binding?.previousButton?.isEnabled = false
             }
             1 -> {
                 mConextThemeWrapper = ContextThemeWrapper(activity, R.style.Theme_Quiz_Second)
@@ -49,6 +51,8 @@ class QuestionFragment : Fragment() {
             }
             else -> {
                 mConextThemeWrapper =  ContextThemeWrapper(activity, R.style.Theme_Quiz_Fifth)
+                _binding?.nextButton?.text = getString(R.string.submit)
+                isLast = true
             }
         }
         val localLayoutInflater = inflater.cloneInContext(mConextThemeWrapper)
@@ -60,6 +64,12 @@ class QuestionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        _binding?.nextButton?.setOnClickListener {
+            if (!isLast) {
+                fragmentSendDataListener?.onSendData()
+            }
+        }
     }
 
     companion object {

@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
         val transition = supportFragmentManager.beginTransaction();
         transition.replace(R.id.container, fragment, "FRAGMENT_$questionNumber")
             .commit()
-
     }
 
     override fun onSendData() {
