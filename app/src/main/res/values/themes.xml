@@ -47,7 +47,7 @@
 
     <style name="Theme.Quiz.Fifth" parent="Theme.Quiz">
         <item name="colorPrimary">@color/cyan_100</item>
-        <item name="colorPrimaryDark">@color/cyan_100</item>
+        <item name="colorPrimaryDark">@color/cyan_100_dark</item>
         <item name="colorPrimaryVariant">@color/cyan_100_dark</item>
         <item name="colorSecondary">@color/cyan_100_light</item>
         <item name="colorSecondaryVariant">@color/cyan_100_light</item>
