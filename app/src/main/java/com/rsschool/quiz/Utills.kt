@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 
 object Utills {
    val FRAGMENT_ID = "fragment_id_key"
+   val CORRECT = "correct questions"
+   val AMOUNT_OF_QUESTIONS = "amount of questions"
    val FRAGMENT_STYLE = "fragment_style_key"
    val questionsList = arrayListOf<String>("Какой танк был введен в игру позже других?",
       "Какой танк раньше был выше уровнем?",

@@ -2,11 +2,9 @@ package com.rsschool.quiz
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.RadioButton
 import com.rsschool.quiz.databinding.ActivityMainBinding
 import com.rsschool.quiz.fragments.QuestionFragment
+import com.rsschool.quiz.fragments.ResultFragment
 
 class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataListener {
 
@@ -39,13 +37,13 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
         {
             updateAnswer(fragId, answers[fragId])
         }
-        
+
         openQuestion(fragId + direction)
     }
 
     override fun onSubmit(lastId: Int) {
         val correct = calculateResult(lastId+1)
-        openResultFragmetn(lastId+1, correct)
+        openResultFragment(lastId+1, correct)
     }
 
     fun calculateResult(amountOfQuestions: Int): Int{
@@ -64,8 +62,11 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
         return correct
     }
 
-    fun openResultFragmetn(amountOfQuestions: Int, correct: Int) {
-
+    fun openResultFragment(amountOfQuestions: Int, correct: Int) {
+        val fragment = ResultFragment.newInstance(amountOfQuestions, correct)
+        val transition = supportFragmentManager.beginTransaction();
+        transition.replace(R.id.container, fragment, "FRAGMENT_RESULT")
+            .commit()
     }
 
     fun updateAnswer(mId:Int, answ:Int) {
