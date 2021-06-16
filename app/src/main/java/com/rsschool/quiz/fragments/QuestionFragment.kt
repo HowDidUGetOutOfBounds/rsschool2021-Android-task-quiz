@@ -1,16 +1,14 @@
 package com.rsschool.quiz.fragments
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.R
 import com.rsschool.quiz.Utills
 import com.rsschool.quiz.Utills.FRAGMENT_ID
-import com.rsschool.quiz.Utills.FRAGMENT_STYLE
 import com.rsschool.quiz.databinding.FragmentQuizBinding
+import com.rsschool.quiz.MainActivity.Companion.answers
 
 class QuestionFragment : Fragment() {
 
@@ -20,8 +18,6 @@ class QuestionFragment : Fragment() {
     private var isFirst = false
     private var fragId: Int = 0
     private var answer: Int = -1
-    val sp = activity?.getPreferences(MODE_PRIVATE)
-    val editor = sp?.edit()
 
     interface OnFragmentSendDataListener {
         fun onSendData(fragId: Int, answer: Int, direction: Int = 1)
@@ -77,14 +73,9 @@ class QuestionFragment : Fragment() {
         _binding = FragmentQuizBinding.inflate(localLayoutInflater, container, false)
         val view = _binding!!.root
 
-        val sp = activity?.getPreferences(MODE_PRIVATE)
-        var switched = sp?.getInt(Utills.FRAGMENT_ID+fragId, -1)
-
-        Log.d("TAG", switched.toString())
-
-        if(switched != -1)
+        if(answers[fragId] != -1)
         {
-            when(switched) {
+            when(answers[fragId]) {
                 0 -> {
                     _binding?.optionOne?.isChecked = true
                 }
@@ -124,37 +115,26 @@ class QuestionFragment : Fragment() {
 
             optionOne.setOnClickListener {
                 retVal = 1
-
-                editor?.putInt(Utills.FRAGMENT_ID+fragId, retVal-1)
-                editor?.apply()
-
-                Log.d("TAG", "onViewCreated: retval " + sp?.getInt(Utills.FRAGMENT_ID+fragId, retVal-1))
+                answer = retVal-1
             }
             optionTwo.setOnClickListener {
                 retVal = 2
-
-                editor?.putInt(Utills.FRAGMENT_ID+fragId, retVal-1)
-                editor?.apply()
+                answer = retVal-1
             }
             optionThree.setOnClickListener {
                 retVal = 3
-
-                editor?.putInt(Utills.FRAGMENT_ID+fragId, retVal-1)
-                editor?.apply()
+                answer = retVal-1
             }
             optionFour.setOnClickListener {
                 retVal = 4
-
-                editor?.putInt(Utills.FRAGMENT_ID+fragId, retVal-1)
-                editor?.apply()
+                answer = retVal-1
             }
             optionFive.setOnClickListener {
                 retVal = 5
-
-                editor?.putInt(Utills.FRAGMENT_ID+fragId, retVal-1)
-                editor?.apply()
+                answer = retVal-1
             }
         }
+
 
 
         if(isFirst){

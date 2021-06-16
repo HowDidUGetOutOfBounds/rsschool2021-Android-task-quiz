@@ -12,13 +12,15 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
 
     private lateinit var binding: ActivityMainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        openQuestion(0)
+
+        openQuestion(0);
 
 
     }
@@ -31,7 +33,13 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
     }
 
     override fun onSendData(fragId: Int, answer: Int, direction: Int) {
-        updateAnswer(fragId, answer)
+        if (answer != -1) {
+            updateAnswer(fragId, answer)
+        } else if (answers[fragId] != -1)
+        {
+            updateAnswer(fragId, answers[fragId])
+        }
+        
         openQuestion(fragId + direction)
     }
 
@@ -46,9 +54,7 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
         var iterableVar: Int
         for(mId in 0..amountOfQuestions-1)
         {
-            val sp = getPreferences(MODE_PRIVATE)
-            iterableVar = sp.getInt(Utills.FRAGMENT_ID+mId, -1)
-
+            iterableVar = answers[mId]
             if(iterableVar == Utills.answersList.get(mId))
             {
                 correct++
@@ -63,12 +69,11 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
     }
 
     fun updateAnswer(mId:Int, answ:Int) {
-        val sp = getPreferences(MODE_PRIVATE)
-        val editor = sp.edit()
+        answers[mId] = answ
+    }
 
-        editor.putInt(Utills.FRAGMENT_ID+mId, answ)
-        editor.apply()
-        Log.d("TAG", "updateAnswer: " + Utills.FRAGMENT_ID+mId + " " + answ)
+    companion object{
+        var answers = mutableListOf<Int>(-1, -1, -1, -1, -1)
     }
 
 }
