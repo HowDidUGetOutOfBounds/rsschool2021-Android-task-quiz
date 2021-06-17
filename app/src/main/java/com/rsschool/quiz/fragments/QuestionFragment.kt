@@ -4,11 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.MainActivity.Companion.answers
 import com.rsschool.quiz.R
 import com.rsschool.quiz.Utills
 import com.rsschool.quiz.Utills.FRAGMENT_ID
 import com.rsschool.quiz.databinding.FragmentQuizBinding
-import com.rsschool.quiz.MainActivity.Companion.answers
 
 class QuestionFragment : Fragment() {
 
@@ -21,7 +21,7 @@ class QuestionFragment : Fragment() {
 
     interface OnFragmentSendDataListener {
         fun onSendData(fragId: Int, answer: Int, direction: Int = 1)
-        fun onSubmit(lastId: Int)
+        fun onSubmit(lastId: Int, answer: Int)
     }
 
     override fun onAttach(context: Context) {
@@ -42,7 +42,6 @@ class QuestionFragment : Fragment() {
         when (fragId) {
             0 -> {
                 mConextThemeWrapper = ContextThemeWrapper(activity, R.style.Theme_Quiz_First)
-                _binding?.previousButton?.isEnabled = false
                 window?.statusBarColor =
                     context?.resources?.getColor(R.color.deep_orange_100_dark)!!
                 isFirst = true
@@ -64,7 +63,6 @@ class QuestionFragment : Fragment() {
             else -> {
                 mConextThemeWrapper = ContextThemeWrapper(activity, R.style.Theme_Quiz_Fifth)
                 window?.statusBarColor = context?.resources?.getColor(R.color.cyan_100)!!
-                _binding?.nextButton?.text = getString(R.string.submit)
                 isLast = true
             }
         }
@@ -115,43 +113,51 @@ class QuestionFragment : Fragment() {
 
             optionOne.setOnClickListener {
                 retVal = 1
-                answer = retVal-1
+                answer = retVal
             }
             optionTwo.setOnClickListener {
                 retVal = 2
-                answer = retVal-1
+                answer = retVal
             }
             optionThree.setOnClickListener {
                 retVal = 3
-                answer = retVal-1
+                answer = retVal
             }
             optionFour.setOnClickListener {
                 retVal = 4
-                answer = retVal-1
+                answer = retVal
             }
             optionFive.setOnClickListener {
                 retVal = 5
-                answer = retVal-1
+                answer = retVal
             }
         }
 
 
 
         if(isFirst){
-            _binding?.toolbar?.navigationIcon?.setVisible(false, true)
+            _binding?.toolbar?.navigationIcon?.alpha = 0
+            _binding?.toolbar?.isEnabled = false
+            _binding?.previousButton?.isEnabled = false
+
         }
         else{
             _binding?.toolbar?.setNavigationOnClickListener {
                 fragmentSendDataListener?.onSendData(fragId, answer)
             }
         }
+        if(isLast)
+        {
+            _binding?.nextButton?.text = "Submit"
+        }
 
+        _binding?.toolbar?.title = "Question ${fragId + 1}"
 
         _binding?.nextButton?.setOnClickListener {
             if (!isLast) {
                 fragmentSendDataListener?.onSendData(fragId,answer)
             } else {
-                fragmentSendDataListener?.onSubmit(fragId)
+                fragmentSendDataListener?.onSubmit(fragId, answer)
             }
         }
 

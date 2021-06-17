@@ -2,11 +2,12 @@ package com.rsschool.quiz
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.rsschool.quiz.databinding.ActivityMainBinding
 import com.rsschool.quiz.fragments.QuestionFragment
 import com.rsschool.quiz.fragments.ResultFragment
 
-class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataListener {
+class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataListener, ResultFragment.OnFragmentResultDataListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -41,7 +42,14 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
         openQuestion(fragId + direction)
     }
 
-    override fun onSubmit(lastId: Int) {
+    override fun onSubmit(lastId: Int, answer: Int) {
+        if (answer != -1) {
+            updateAnswer(lastId, answer)
+        } else if (answers[lastId] != -1)
+        {
+            updateAnswer(lastId, answers[lastId])
+        }
+
         val correct = calculateResult(lastId+1)
         openResultFragment(lastId+1, correct)
     }
@@ -53,7 +61,7 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
         for(mId in 0..amountOfQuestions-1)
         {
             iterableVar = answers[mId]
-            if(iterableVar == Utills.answersList.get(mId))
+            if(iterableVar == Utills.answersList[mId])
             {
                 correct++
             }
@@ -75,6 +83,16 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
 
     companion object{
         var answers = mutableListOf<Int>(-1, -1, -1, -1, -1)
+    }
+
+    override fun onBack() {
+        Log.d("b", "b")
+        answers =  mutableListOf<Int>(-1, -1, -1, -1, -1)
+        openQuestion(0)
+    }
+
+    override fun onShare() {
+
     }
 
 }
