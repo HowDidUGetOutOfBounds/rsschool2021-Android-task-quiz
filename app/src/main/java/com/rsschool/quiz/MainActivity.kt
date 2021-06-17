@@ -95,12 +95,12 @@ class MainActivity : AppCompatActivity(), QuestionFragment.OnFragmentSendDataLis
         val shareIntent = Intent.createChooser(sendIntent, "Send to your friend!")
         startActivity(shareIntent)
     }
-    
+
     fun generateResponce(data: String): String {
         var result = ""
         result += resources.getString(R.string.result) + data + "\n"
         for (i in 0..Utills.questionsList.size - 1) {
-            result += Utills.questionsList[i] + " and your answer:" + answers[i] + "\n"
+            result += Utills.questionsList[i] + " and your answer:" + Utills.answers[i][answers[i]] + "\n"
         }
 
         return result
