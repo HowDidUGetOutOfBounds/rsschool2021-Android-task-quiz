@@ -20,7 +20,7 @@ class ResultFragment: Fragment() {
 
     interface OnFragmentResultDataListener {
         fun onBack()
-        fun onShare()
+        fun onShare(all: Int, my: Int)
     }
 
     override fun onAttach(context: Context) {
@@ -40,15 +40,20 @@ class ResultFragment: Fragment() {
         window?.statusBarColor =
             context?.resources?.getColor(R.color.deep_orange_100_dark)!!
 
-        val q1 = arguments?.getInt(Utills.AMOUNT_OF_QUESTIONS, 0)
-        val q2 = arguments?.getInt(Utills.CORRECT, 0)
+        val q1 = requireArguments().getInt(Utills.AMOUNT_OF_QUESTIONS, 0)
+        val q2 = requireArguments().getInt(Utills.CORRECT, 0)
 
         _binding2?.textViewResult?.text = resources.getString(R.string.result) + q2 + "/" + q1
         _binding2?.exitButton?.setOnClickListener {
             activity?.finish()
         }
-        _binding2?.backButton?.setOnClickListener {
 
+        _binding2?.backButton?.setOnClickListener {
+            fragmentResultDataListener?.onBack()
+        }
+
+        _binding2?.shareButton?.setOnClickListener{
+                fragmentResultDataListener?.onShare(q1, q2)
         }
 
         return view

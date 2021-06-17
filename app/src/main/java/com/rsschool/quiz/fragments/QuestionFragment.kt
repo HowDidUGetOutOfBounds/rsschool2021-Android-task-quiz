@@ -63,9 +63,10 @@ class QuestionFragment : Fragment() {
             else -> {
                 mConextThemeWrapper = ContextThemeWrapper(activity, R.style.Theme_Quiz_Fifth)
                 window?.statusBarColor = context?.resources?.getColor(R.color.cyan_100)!!
-                isLast = true
             }
         }
+        isLast = (Utills.questionsList.size == fragId+1)
+
         val localLayoutInflater = inflater.cloneInContext(mConextThemeWrapper)
 
         _binding = FragmentQuizBinding.inflate(localLayoutInflater, container, false)
@@ -111,25 +112,22 @@ class QuestionFragment : Fragment() {
             optionFour.text = Utills.answers[fragId][3]
             optionFive.text = Utills.answers[fragId][4]
 
+            _binding?.nextButton?.isEnabled = answers[fragId] != -1
+
             optionOne.setOnClickListener {
-                retVal = 1
-                answer = retVal
+                optionClick(1)
             }
             optionTwo.setOnClickListener {
-                retVal = 2
-                answer = retVal
+                optionClick(2)
             }
             optionThree.setOnClickListener {
-                retVal = 3
-                answer = retVal
+                optionClick(3)
             }
             optionFour.setOnClickListener {
-                retVal = 4
-                answer = retVal
+                optionClick(4)
             }
             optionFive.setOnClickListener {
-                retVal = 5
-                answer = retVal
+                optionClick(5)
             }
         }
 
@@ -143,9 +141,11 @@ class QuestionFragment : Fragment() {
         }
         else{
             _binding?.toolbar?.setNavigationOnClickListener {
-                fragmentSendDataListener?.onSendData(fragId, answer)
+                fragmentSendDataListener?.onSendData(fragId, answer, -1)
             }
         }
+
+
         if(isLast)
         {
             _binding?.nextButton?.text = "Submit"
@@ -167,6 +167,12 @@ class QuestionFragment : Fragment() {
             }
         }
 
+    }
+
+    fun optionClick(retVal: Int)
+    {
+        answer = retVal - 1
+        _binding?.nextButton?.isEnabled = true
     }
 
 
