@@ -69,4 +69,9 @@ class ResultFragment: Fragment() {
             return fragment
         }
     }
+
+    override fun onDestroyView() {
+        _binding2 = null
+        super.onDestroyView()
+    }
 }
